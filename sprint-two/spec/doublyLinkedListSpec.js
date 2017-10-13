@@ -117,8 +117,8 @@ describe('doublyLinkedList', function() {
     doublyLinkedList.removeTail();
     expect(doublyLinkedList.tail.next).to.equal(null);
     doublyLinkedList.remove(3);
-    expect(doublyLinkedList.head.next).to.equal(4);
-    expect(doublyLinkedList.tail.prev).to.equal(2);
+    expect(doublyLinkedList.head.next.value).to.equal(4);
+    expect(doublyLinkedList.tail.prev.value).to.equal(2);
   });
   
 });
