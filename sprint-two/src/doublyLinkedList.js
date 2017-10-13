@@ -76,22 +76,41 @@ DoublyLinkedList.prototype.contains = function(target) { // O = n
 
 DoublyLinkedList.prototype.remove = function(target) {
   var curr = this.head;
-  var subs = this.head.next;
+  // var subs = this.head.next;
   
   if (_.isEqual(curr.value, target)) {
-    this.removeHead();
-    return;
+    return this.removeHead();
   }
   
-  while (subs !== null) {
-    if (_.isEqual(subs.value, target)) {
-      curr.next = subs.next;
-      return;
-    } else {
-      curr = subs;
-      subs = subs.next;
+  // set curr to curr.next
+  // check if curr.next !== null
+  // check if curr.value === target
+    // if true, update curr.prev.next to be curr.next
+    // update curr.next.prev to be curr.prev
+    // if false, do this.removeTail();
+    
+  while (curr.next !== null) {
+    if (_.isEqual(curr.value, target)) {
+      curr.prev.next = curr.next;
+      curr.next.prev = curr.prev;
+      return curr.value;
     }
+    curr = curr.next;
   }
+  
+  if (_.isEqual(curr.value, target)) {
+    return this.removeTail();
+  }
+  
+  // while (subs !== null) {
+  //   if (_.isEqual(subs.value, target)) {
+  //     curr.next = subs.next;
+  //     return;
+  //   } else {
+  //     curr = subs;
+  //     subs = subs.next;
+  //   }
+  // }
 };
 
 var DoublyLinkedNode = function(value) {
