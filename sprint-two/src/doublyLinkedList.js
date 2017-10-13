@@ -34,8 +34,15 @@ DoublyLinkedList.prototype.removeHead = function() { // O = 1
     return undefined;
   }
   var temp = this.head.value;
-  this.head = this.head.next;
-  this.head.prev = null;
+  // if list contains one item, set head and tail to null
+  // else set head to the next value and removes its prev node
+  if (this.head === this.tail) {
+    this.head = null;
+    this.tail = null;
+  } else {
+    this.head = this.head.next;
+    this.head.prev = null;
+  }
   return temp;
 };
 
@@ -43,8 +50,16 @@ DoublyLinkedList.prototype.removeTail = function() {
   if (this.head === null && this.tail === null) {
     return undefined;
   }
-  var temp = this.head.value;
-  this.head = this.head.next;
+  var temp = this.tail.value;
+  // if list contains one item, set head and tail to null
+  // else set tail to the prev value and removes its next node
+  if (this.head === this.tail) {
+    this.head = null;
+    this.tail = null;
+  } else {
+    this.tail = this.tail.prev;
+    this.tail.next = null;
+  }
   return temp;
 };
 
