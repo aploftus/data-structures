@@ -1,9 +1,9 @@
- 
+
 
 var HashTable = function() {
   this._limit = 8;
   this._storage = LimitedArray(this._limit);
-  
+  this._counter = 0;
 };
 
 HashTable.prototype.insert = function(k, v) { // O(1)
@@ -27,6 +27,8 @@ HashTable.prototype.insert = function(k, v) { // O(1)
   }
   // if doesn't already exist, stores k/v tuple in bucket
   this._storage.get(index).addToTail([k, v]);
+  ++this._counter;
+  this._rehash();
 };
 
 HashTable.prototype.retrieve = function(k) { //O(1)
@@ -56,8 +58,41 @@ HashTable.prototype.remove = function(k) { // O(1)
     } else {
       current = current.next;
     }
-  }
+  } 
+};
+
+HashTable.prototype.resize = function() {
+  var oldStorage = this._storage;
+  // for EACH index in old LimitedArray, call rehash
+  var rehash = function(bucket) {
+    var current = bucket.head;
+    
+    while (current !== null) {
+      //insert(current.value[0])
+    }
+    // for each node in bucket
+    // grab the key (node[0]), and rehash to new LimitedArray (node[0], node[1]);
+    // use new hash to insert k/v pair in new LimitedArray
+  };
   
+  // when counter / limit > .75
+    // double the limit
+    // rehash every item
+  if (this._counter / this._limit >= 0.75) {
+    this._limit *= 2;
+    this._storage = LimitedArray(this._limit);
+    oldStorage.each(rehash);
+  }
+   
+    
+  // when counter / limit < .25
+    // halve the limit
+    // rehash every item  
+  if (this._counter / this._limit <= 0.25) {
+    this._limit /= 2;
+    this._storage = LimitedArray(this._limit);
+    oldStorage.each(rehash);
+  }
 };
 
 
