@@ -54,4 +54,14 @@ describe('linkedList', function() {
   it('should return undefined if removeHead is called on an empty list', function() {
     expect(linkedList.removeHead()).to.equal(undefined);
   });
+  
+  it('should remove items from the middle', function() {
+    linkedList.addToTail(1);
+    linkedList.addToTail(2);
+    linkedList.addToTail(3);
+    linkedList.remove(2);
+    expect(linkedList.contains(2)).to.equal(false);
+    expect(linkedList.contains(1)).to.equal(true);
+    expect(linkedList.contains(3)).to.equal(true);
+  });
 });

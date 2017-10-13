@@ -33,6 +33,26 @@ var LinkedList = function() {
     }
     return true;
   };
+  
+  list.remove = function(target) {
+    var curr = list.head;
+    var subs = list.head.next;
+    
+    if (_.isEqual(curr.value, target)) {
+      list.removeHead();
+      return;
+    }
+    
+    while (subs !== null) {
+      if (_.isEqual(subs.value, target)) {
+        curr.next = subs.next;
+        return;
+      } else {
+        curr = subs;
+        subs = subs.next;
+      }
+    }
+  };
 
   return list;
 };
