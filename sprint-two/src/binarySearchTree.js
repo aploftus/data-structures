@@ -49,6 +49,23 @@ BinarySearchTree.prototype.depthFirstLog = function(callback) { // O(n);
   }
 };
 
+BinarySearchTree.prototype.breadthFirstLog = function(callback) { // O(n)
+  var queue = new Queue();
+  
+  queue.enqueue(this);
+  
+  while (queue.size() > 0) {
+    var processed = queue.dequeue();
+    callback(processed.value);
+    if (processed.left) {
+      queue.enqueue(processed.left);
+    }
+    if (processed.right) {
+      queue.enqueue(processed.right);
+    }
+  }
+};
+
 
 /*
  * Complexity: What is the time complexity of the above functions?
