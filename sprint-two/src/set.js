@@ -7,15 +7,19 @@ var Set = function() {
 var setPrototype = {};
 
 setPrototype.add = function(item) { // O(1)
-  this._storage[item] = item;
+  // on the key, prepend a prefix for each type
+  var key = '' + typeof item + item;
+  this._storage[key] = item;
 };
 
 setPrototype.contains = function(item) { // O(1)
-  return this._storage[item] !== undefined;
+  var key = '' + typeof item + item;
+  return this._storage[key] !== undefined;
 };
 
 setPrototype.remove = function(item) { // O(1)
-  delete this._storage[item];
+  var key = '' + typeof item + item;
+  delete this._storage[key];
 };
 
 /*
