@@ -59,4 +59,11 @@ describe('binarySearchTree', function() {
     expect(array).to.eql([5, 2, 3, 7]);
     expect(array).to.not.eql([5, 7, 2, 3]);
   });
+  
+  it('should update grandparent height when grandchild is added', function() {
+    binarySearchTree.insert(2);
+    binarySearchTree.insert(3);
+    binarySearchTree.insert(7);
+    expect(binarySearchTree.height).to.eql(3);
+  });
 });

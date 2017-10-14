@@ -2,6 +2,8 @@ var BinarySearchTree = function(value) {
   this.left = null;
   this.right = null;
   this.value = value;
+  this.parent = null;
+  this.height = 1;
 };
 
 BinarySearchTree.prototype.insert = function(value) { // O(log(n));
@@ -18,6 +20,16 @@ BinarySearchTree.prototype.insert = function(value) { // O(log(n));
       this.right.insert(value);
     }
   }
+  this.updateHeight();
+  // if a node has no children, when we insert child,, we increment parent's height to 1
+  // at grandparent, set height to greater of left.height and right.height;
+  // recursively check all grandparents and update.
+};
+
+BinarySearchTree.prototype.updateHeight = function() {
+  var leftHeight = this.left ? this.left.height : 0;
+  var rightHeight = this.right ? this.right.height :0;
+  this.height = Math.max(leftHeight, rightHeight) + 1;
 };
 
 BinarySearchTree.prototype.contains = function(value) { // O(log(n));
