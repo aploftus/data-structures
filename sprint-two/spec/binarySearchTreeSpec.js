@@ -66,4 +66,13 @@ describe('binarySearchTree', function() {
     binarySearchTree.insert(7);
     expect(binarySearchTree.height).to.eql(3);
   });
+  
+  it('should rebalance when height difference of two branches is greater than 1 or less than -1', function() {
+    var array = [];
+    var func = function(value) { array.push(value); };
+    binarySearchTree.insert(6);
+    binarySearchTree.insert(7);
+    binarySearchTree.breadthFirstLog(func);
+    expect(array).to.eql([6, 5, 7]);
+  });
 });

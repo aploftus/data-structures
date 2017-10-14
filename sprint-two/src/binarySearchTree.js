@@ -10,12 +10,14 @@ BinarySearchTree.prototype.insert = function(value) { // O(log(n));
   if (value < this.value) {
     if (this.left === null) {
       this.left = new BinarySearchTree(value);
+      this.left.parent = this;
     } else {
       this.left.insert(value);
     }
   } else {
     if (this.right === null) {
       this.right = new BinarySearchTree(value);
+      this.right.parent = this;
     } else {
       this.right.insert(value);
     }
@@ -30,6 +32,33 @@ BinarySearchTree.prototype.updateHeight = function() {
   var leftHeight = this.left ? this.left.height : 0;
   var rightHeight = this.right ? this.right.height :0;
   this.height = Math.max(leftHeight, rightHeight) + 1;
+  this.rebalance(leftHeight, rightHeight);
+};
+
+BinarySearchTree.prototype.rebalance = function(leftHeight, rightHeight) {
+  var balanceFactor = leftHeight - rightHeight;
+  // balance from bottom first
+  // let's first deal with a simple rotation
+  if (balanceFactor < -1) {
+    // rotate to the left because right is too tall
+    var oldParent = this;
+    var newParent = this.right;
+    newParent.parent = oldParent.parent;
+    newParent.left = oldParent;
+    oldParent.parent = newParent;
+    oldParent.right = null;
+    // this = newParent; // This severs the entire tree, rather than reassigning the Tree to start at newParent;
+  }
+  if (balanceFactor > 1) {
+    // rotate to the rigth because left is too tall
+    var oldParent = this;
+    var newParent = this.left;
+    newParent.parent = oldParent.parent;
+    newParent.right = oldParent;
+    oldParent.parent = newParent;
+    oldParent.left = null;
+    // this = newParent; // This severs the entire tree, rather than reassigning the Tree to start at newParent;
+  }
 };
 
 BinarySearchTree.prototype.contains = function(value) { // O(log(n));
