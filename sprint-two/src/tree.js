@@ -29,9 +29,6 @@ treeMethods.contains = function(target) { // O(n)
 };
 
 treeMethods.removeFromParent = function() {
-  // dissociate a tree from its parent (and a parent from its child)
-  // access parent using tree.parent
-  
   if (this.parent !== null) {
     var siblings = this.parent.children;
     for (var i = 0; i < siblings.length; ++i) {
@@ -40,14 +37,23 @@ treeMethods.removeFromParent = function() {
         break;
       }
     }
-    // traverse array looking for 'this' (itself)
-    // grab the index of self ('this')
-    // siblings.splice(index, 1);
   }
   this.parent = null;
- 
-  // remove child from parent
-   // set tree.parent (of a child) to null (break connection of)
+};
+
+treeMethods.traverse = function(callback) {
+  var queue = new Queue();
+  queue.enqueue(this);
+  
+  while (queue.size() > 0) {
+    var processed = queue.dequeue();
+    callback(processed.value);
+    if(processed.children.length > 0) {
+      processed.children.forEach(function(child) {
+        queue.enqueue(child);
+      });
+    }
+  }
 };
 
 

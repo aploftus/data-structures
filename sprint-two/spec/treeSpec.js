@@ -47,6 +47,17 @@ describe('tree', function() {
     expect(tree.contains(8)).to.equal(true);
   });
   
+  it('should should accept a callback and execute it on every value contained in the tree', function() {
+    var array = [];
+    var func = function(value) { array.push(value); };
+    tree.addChild(5);
+    tree.addChild(6);
+    tree.children[0].addChild(7);
+    tree.children[1].addChild(8);
+    tree.traverse(func);
+    expect(array).to.eql([undefined, 5, 6, 7, 8])
+  });
+  
   it('should be able to dissociate a tree from its parent', function() {
     tree.addChild(5);
     tree.children[0].addChild(6);
