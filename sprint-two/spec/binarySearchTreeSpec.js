@@ -75,4 +75,5 @@ describe('binarySearchTree', function() {
     binarySearchTree.breadthFirstLog(func);
     expect(array).to.eql([3, 1, 5]);
   });
+
 });
