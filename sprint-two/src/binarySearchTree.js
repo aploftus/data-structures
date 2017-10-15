@@ -56,41 +56,51 @@ BinarySearchTree.prototype._rebalance = function(leftHeight, rightHeight) {
       this._rotateRight(this);
     }
   }
+  
+  // one way to handle the next complication of balancing
+  // is to keep track ON EACH NODE, the balanceFactor
+  // if a node's balanceFactor >=2, we can know which way to go back down and rotate
+  // by seeing which child of node is >0. Perform the rotation there.
+  
+  
 };
 
 BinarySearchTree.prototype._rotateLeft = function(parent) {
   var oldParent = parent;
   var newParent = parent.right;
+  var grandparent = oldParent.parent;
   newParent.parent = oldParent.parent;
   newParent.left = oldParent;
   // updates grandparent's child to be newparent
-  if (oldParent.parent) {
-    if (oldParent.parent.left === oldParent) {
-      oldParent.parent.left = newParent
+  if (grandparent) {
+    if (grandparent.left === oldParent) {
+      grandparent.left = newParent
+      // oldParent.right = newParent.left; // need to add this feature after line 80 as well, and need to add to _rotateRight;
     } else {
-      oldParent.parent.right = newParent;
+      grandparent.right = newParent;
     }
   }
   
-  oldParent.parent = newParent;
+  grandparent = newParent;
   oldParent.right = null;
 };
 
 BinarySearchTree.prototype._rotateRight = function(parent) {
   var oldParent = parent;
   var newParent = parent.left;
+  var grandparent = oldParent.parent;
   newParent.parent = oldParent.parent;
   newParent.right = oldParent;
   // updates grandparent's child to be newparent
-  if (oldParent.parent) {
-    if (oldParent.parent.left === oldParent) {
-      oldParent.parent.left = newParent
+  if (grandparent) {
+    if (grandparent.left === oldParent) {
+      grandparent.left = newParent
     } else {
-      oldParent.parent.right = newParent;
+      grandparent.right = newParent;
     }
   }
   
-  oldParent.parent = newParent;
+  grandparent = newParent;
   oldParent.left = null;
 };
 
