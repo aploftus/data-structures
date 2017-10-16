@@ -1,36 +1,29 @@
 var Queue = function() {
   var someInstance = {};
-
-  // Use an object with numeric keys to store values
   var storage = {};
-  var head = -1;
-  var tail = -1;
-
-  // Implement the methods below
+  var head = 0; // initialize to 0 to allow .size() to be O(1)
+  var tail = 0;
 
   someInstance.enqueue = function(value) {
-    if (someInstance.size() === 0) {
-      head = 0;
-    }
-    ++tail;
-    storage[tail] = value;
+    storage[tail++] = value;
   };
 
   someInstance.dequeue = function() {
     var temp = storage[head];
     
     delete storage[head];
-    if (someInstance.size() === 0) {
-      head = -1;
-      tail = -1;
-    } else {
+
+    if (someInstance.size()) {
       head++;
+    } else { // reset to prevent integer overflow
+      head = 0;
+      tail = 0;
     }
     return temp;
   };
 
   someInstance.size = function() {
-    return Object.keys(storage).length;
+    return tail - head;
   };
 
   return someInstance;

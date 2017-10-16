@@ -1,34 +1,32 @@
 var Queue = function() {
   var someInstance = Object.create(queueMethods);
   someInstance.storage = {};
-  someInstance.head = -1;
-  someInstance.tail = -1;
+  someInstance.head = 0; // initialize to 0 to allow .size() to be O(1)
+  someInstance.tail = 0; 
   return someInstance;
 };
 
 var queueMethods = {};
 
 queueMethods.enqueue = function(value) {
-  if (this.size() === 0) {
-    ++this.head;
-  }
-  ++this.tail;
-  this.storage[this.tail] = value;
+  this.storage[this.tail++] = value;
 };
 
 queueMethods.dequeue = function() {
   var tmp = this.storage[this.head];
   
-  delete this.storage[this.head++];
-  if (this.size() === 0) {
-    this.head = -1;
-    this.tail = -1;
+  delete this.storage[this.head];
+  if (this.size()) {
+    this.head++;
+  } else { // reset to prevent integer overflow
+    this.head = 0;
+    this.tail = 0;
   }
   return tmp;
 };
 
 queueMethods.size = function() {
-  return Object.keys(this.storage).length;
+  return this.tail - this.head;
 };
 
 
