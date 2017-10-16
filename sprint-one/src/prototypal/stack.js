@@ -1,26 +1,26 @@
 var Stack = function() {
   var someInstance = Object.create(stackMethods);
   someInstance.storage = {};
-  someInstance.head = -1;
+  someInstance.head = 0; // initialize to 0 so .size() runs in O(1)
   return someInstance;
 };
 
 var stackMethods = {};
 
 stackMethods.push = function(value) {
-  ++this.head;
-  this.storage[this.head] = value;
+  this.storage[++this.head] = value;
 };
 
 stackMethods.pop = function() {
   var tmp = this.storage[this.head];
   
-  delete this.storage[this.head--];
+  delete this.storage[this.head];
+  this.head > 0 ? this.head-- : this.head = 0;
   return tmp;
 };
 
 stackMethods.size = function() {
-  return Object.keys(this.storage).length;
+  return this.head;
 };
 
 

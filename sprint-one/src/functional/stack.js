@@ -1,29 +1,22 @@
 var Stack = function() {
   var someInstance = {};
-
-  // Use an object with numeric keys to store values
   var storage = {};
-  var head = -1;
+  var head = 0; // initialize to 0 so .size() runs in O(1)
 
-  // Implement the methods below
   someInstance.push = function(value) {
-    ++head;
-    storage[head] = value;
+    storage[++head] = value;
   };
 
   someInstance.pop = function() {
-    if (someInstance.size === 0) {
-      head = -1;
-      return undefined;
-    }
     var temp = storage[head];
     
-    delete storage[head--]; // updates head
+    delete storage[head];
+    head > 0 ? head-- : head = 0;
     return temp;
   };
 
   someInstance.size = function() {
-    return Object.keys(storage).length;
+    return head;
   };
 
   return someInstance;
