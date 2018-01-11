@@ -10,8 +10,11 @@ var Stack = function() {
   someInstance.pop = function() {
     var temp = storage[head];
     
-    delete storage[head];
-    head > 0 ? head-- : head = 0;
+    delete storage[head--];
+    if (head < 0) {
+      head = 0;
+    }
+    // head > 0 ? head-- : head = 0;
     return temp;
   };
 

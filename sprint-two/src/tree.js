@@ -1,7 +1,7 @@
 var Tree = function(value) {
   var newTree = {};
   newTree.value = value;
-  newTree.children = [];
+  newTree.children = []; // Is there value in making children a linked list instead?
   newTree.parent = null;
   _.extend(newTree, treeMethods);
 
@@ -28,7 +28,7 @@ treeMethods.contains = function(target) { // O(n)
   return true;
 };
 
-treeMethods.removeFromParent = function() {
+treeMethods.removeFromParent = function() { // O(nearly 1 relative to size of Whole Tree)
   if (this.parent !== null) {
     var siblings = this.parent.children;
     for (var i = 0; i < siblings.length; ++i) {
@@ -39,9 +39,10 @@ treeMethods.removeFromParent = function() {
     }
   }
   this.parent = null;
+  return this;
 };
 
-treeMethods.traverse = function(callback) {
+treeMethods.traverse = function(callback) { // O(n);
   var queue = new Queue();
   queue.enqueue(this);
   
